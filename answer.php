@@ -29,24 +29,26 @@
     <main class="mdl-layout__content">
       <div class="right-image">
         <img src="./images/download.jpeg" alt="pokedex" />
-        <div class="page-content">
-          Click the button to get a random generation 1 pokemon
-          <br />
-          <br />
-          <form action="answer.php" method="GET">
-            <!-- Accent-colored raised button with ripple -->
-            <button
-              class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-              type="submit"
-              name="get_pokemon">
-              Find a pokemon
-            </button>
-          </form>
+      </div>
+      <div class="page-content-php">
+        <div id="user-info">
+          <?php
+          //input
+          $url = "https://pokeapi.co/api/v2/pokemon?limit=151&offset=0";
+          $json = @file_get_contents($url);
+          $data = json_decode($json, true);
 
-          <br />
+          // process
+          $pokemonList = $data['results'];
+          $randomIndex = rand(0, count($pokemonList) - 1);
+          $randomPokemon = $pokemonList[$randomIndex];
+
+          if ($json === FALSE) {
+            return "Sorry, there is an error at this moment.";
+          }
+          ?>
           <div class="page-content-answer">
-            <div id="result">
-            </div>
+            <a href="./index.php">Return</a>
           </div>
         </div>
     </main>
