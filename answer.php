@@ -30,22 +30,27 @@
       <div class="right-image">
         <img src="./images/download.jpeg" alt="pokedex" />
       </div>
-      <div class="page-content-php">
+      <div class="page-content">
+        Click the button to get a random generation 1 pokemon
         <div id="user-info">
           <?php
           //input
           $url = "https://pokeapi.co/api/v2/pokemon?limit=151&offset=0";
           $json = @file_get_contents($url);
+
+          if ($json === FALSE) {
+            return "Sorry, there is an error at this moment.";
+          }
+
           $data = json_decode($json, true);
 
           // process
           $pokemonList = $data['results'];
           $randomIndex = rand(0, count($pokemonList) - 1);
-          $randomPokemon = $pokemonList[$randomIndex];
+          $randomPokemon = $pokemonList[$randomIndex]['name'];
 
-          if ($json === FALSE) {
-            return "Sorry, there is an error at this moment.";
-          }
+          // output
+          echo "<p>$randomPokemon</p>";
           ?>
           <div class="page-content-answer">
             <a href="./index.php">Return</a>
